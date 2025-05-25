@@ -164,14 +164,14 @@ INSERT INTO esignet.client_detail (
   cr_dtimes,
   upd_dtimes
 ) VALUES (
-  'esignet-ui-client',
+  'IIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoVh41',
   'CDPI esignet Demo App',
-  'esignet-ui-client',
+  'IIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoVh41',
   'http://localhost:3001/logo.png',
   '["http://localhost:3001/callback"]',
   '["name", "given_name", "family_name", "gender", "birthdate", "email"]',
   '["mosip:idp:acr:generated-code"]',
-  '{"kty":"RSA","n":"wevrIxgAe7EYb--Sy-wT14HRn4q8Mzwi7cDTk2mEtb-ZGpbSPhbIChR_boqOnbeyR906GKGiCqQKSjYYdsRHrGB8a7oOvE8cNuoG-vUl2tlhhSjlcONvfcXMOfWo-vfp8HimhzPgsOg6gEog0YPksvKuJp5NlOk8mhEy62kcCXrUQ2cROJAszcfZkiAa3oT8Q4RyRnESgE4OodKum8vql-tnHhi9ec5dDgx1SDncStd7J2FsGyqOaBGaqBDy8d974MaZg2uGqDpwAovFIU3X9nFK6qi8VoxbINnwVz4rY22m-XcAZwsrsqiNASYj03qeBjOBLGQEWBDwp-Sax64GzQ","e":"AQAB"}'::jsonb,
+  '{"kty":"RSA","n":"oVh41yh5KGF7V9zO5DyRWKhIU79GWpjWXUoNLNctoWrXa6rdXjyhZBpqBnD4oTY-SnUBZ4TovhHAgqV3HhQAcsglXKrtaa6M6H0wghsg6afkTkKYz3xGg10UVhsJNIJXCiDDSE0_BWuqJrrkEjJ8FYyyiPpgjNJYdCMj2E4i0yWd4Dww5Z8j6ml8QKOr6DN1OQbgV-VHsUlUgyf0rAb24-8yF4b4_QZx9PotF01UoX-38lE-4lWdMGz6ZktiEfvQFYds4qTQ_5k_RkMiU6xUaEbzQ_LbKE0VEzQyUiaksgGh6PIyt741HRXBHa3w_ohbh-XYm7UWVxFQsMqeuVskNw","e":"AQAB","kid":"mkUwNOHGq0RI_hB3x8VhoEChuUZQrxFINGzhfHYEmuY"}'::jsonb,
   '["authorization_code"]',
   '["none"]',
   'ACTIVE',

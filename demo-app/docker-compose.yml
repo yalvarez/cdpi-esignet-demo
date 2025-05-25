@@ -1,0 +1,25 @@
+  services:
+  # NUEVOS SERVICIOS: Tu aplicación Node.js (backend)
+    node-proxy-app:
+      build:
+        context: ./esignet-proxy # Ruta a la carpeta de tu app Node.js donde está el Dockerfile
+        dockerfile: Dockerfile
+      container_name: node-proxy-app
+      ports:
+        - "4000:4000" # Mapea el puerto de tu app Node.js al host
+      volumes:
+        - ./esignet-proxy:/app # Monta el código fuente para desarrollo (hot-reloading si tu app lo soporta)
+        - /app/node_modules # Evita que los node_modules del host sobrescriban los del contenedor
+      restart: always
+
+    # NUEVOS SERVICIOS: Tu aplicación React (frontend)
+    react-app:
+      build:
+        context: ./react-demo-app # Ruta a la carpeta de tu app React donde está el Dockerfile
+        dockerfile: Dockerfile
+      container_name: react-demo-app
+      ports:
+        - "3001:80" # Mapea el puerto 80 del contenedor (Nginx) al puerto 3002 del host
+      depends_on:
+        - node-proxy-app # Si tu React app depende de tu Node.js backend
+      restart: always

@@ -10,12 +10,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const issuer = 'http://localhost:8088';
-const clientId = 'IIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwri_B';
+const clientId = 'IIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoVh41';
 const tokenEndpoint = issuer + '/v1/esignet/oauth/v2/token';
 const userInfoEndpoint = issuer + '/v1/esignet/oidc/userinfo';
 
 //this only for testing purposes
-const privateKeyJWT = {"kty":"RSA","n":"wri_B6j-nUQaodBycHfpcX1wUgjB0KfuXGC8N_0rZeACoV7ddhYJZQYrTfVicUi9B064fgilcB52jSxcvd_8HHLQkW-Fi0s-YTtRO_O_5wiXJ--K7FNcW01vitglGaE48RBqaNAUe2a9K5lYNpTdLaSpRxNkU6JDBpZoLSQ6vRt3rCLhOz-iaagc4SxxMPwLjDtdVM-OC2UI19tmAsNusPvuG5tzCKllALfKHuakp7IqJny6XKSY9Uy9VGSk3Alf_R2hVl5c9ASmHNoDHkTlIBrlb04xz3Q2jpYrf3iR0T_BrmZuFjI4Vhuv75yTymBEEM_ceWlZAvT9uOfhuoxF-w","e":"AQAB","d":"qCvYyGva4sZD3gbiH2Jg2mSE0kS_505x3ZSqWgysI4Mxol8FE4x6tqZ6Vg0c5Uv1_c6uJiOfhlK4_roWquI8ofFDUqgnhSMKD_2j7gxZa9aOfa4zpGFmfXBGanq8qAMG46PS0w0K83zK2lHIzvMIhvgUPs9vsY-NJa5W8M2-cT06waRQiceXee1htfJWcHkJfJ-BJWIw6Z36Z0RUlmLGAe1SdzfCg6qqb9oZaRzgX5pOUvHbwqc2K9XAkoZx9uosDlzTOCJ03g3rafAr9IY8uCLJIMvzj4C_ozLZh3M-fNArcPm_zlwzuAYmkwu_fTX0fmlUA9oAq5BM6vSIjvpfgQ","p":"6NoZHMQq2Mr4SLTv5OIWpq5z0jxmaFPm9Koc35qI76j8587mQe3cPhSCe1H4oTArOFvLpxrA7fETjFrPwWeYUSI8uJBdMGZ89rHne0fnbUGqxdod6IFiTZuMgGDp5OUnAEc82zKIsjvagXq4BCNBZsp86T9B931HiQxu7HoCwME","q":"1hRDEAUDbE0hePefHRdaVDXG3a8NlIKjddzoaYL-Sk8tCL-kdC1czGrXl6ZTWebSwxLfJGWVhuIH3ON_Cm1Mo84LCrfJPU2mU1-D8SP_5vMIbjFEw62-6OitmzTcV8GJsgP03XLZBwIkyLjvBlHs6Q9IAd8YLVpFg1luIw6-ubs","dp":"lu1e351rJFATNJVK9TFyeyGSYw_RVQglKCrnQiwZXDZNjzc1WkCBxB9pH-PW4yukqAgf7bVSnifngs8N4I90VAp8DylLreaQUxqnLupBYDjzJwEk56KNhD4xiLjIghvh9rU2BeIwZk6TZ9-STORJLQZMhqcA7Bjg-Dz93PuMs0E","dq":"ARgja56K8O_H_wVNA-oNpSaNOK7fY-XzDfQuH_PydtDGyyenoIxm0Aivx2-rN2dtpl-fUmFOjVz0a1WiXZxHawLvnYNo_O47rmtrkjz73uNZJK8Nye5GboxZ7tQrWCt-F7Hbe5JNt7J0G66OUjry-hIA7TmFtx2iA1TeskEuCmc","qi":"qIaPy92AY5P_ghujZYJzqU-cAY22ksd2f_A8uiU7kYx8DqYSogtT6qnAtCPQ6rE_ZGtpPZQYiSLaMsqQF5nD9Tip3KyyoAh7H2bgmuq-RdXu_kQ_zn-i7xR_-WU5rUarBHffFOLT-xHS-IeECKBsa7Fz23ZInh4L5wZY8deb_OM"};
+const privateKeyJWT = {"kty":"RSA","n":"oVh41yh5KGF7V9zO5DyRWKhIU79GWpjWXUoNLNctoWrXa6rdXjyhZBpqBnD4oTY-SnUBZ4TovhHAgqV3HhQAcsglXKrtaa6M6H0wghsg6afkTkKYz3xGg10UVhsJNIJXCiDDSE0_BWuqJrrkEjJ8FYyyiPpgjNJYdCMj2E4i0yWd4Dww5Z8j6ml8QKOr6DN1OQbgV-VHsUlUgyf0rAb24-8yF4b4_QZx9PotF01UoX-38lE-4lWdMGz6ZktiEfvQFYds4qTQ_5k_RkMiU6xUaEbzQ_LbKE0VEzQyUiaksgGh6PIyt741HRXBHa3w_ohbh-XYm7UWVxFQsMqeuVskNw","e":"AQAB","d":"gL18ZonX6v2lkp0QxJMDks9sLs7Pz1hmq7d7vczQjx0WWMXUru4IBT0CXrNj4BbNK1IjVbt6jrbRei2XV3u0Q-Ip1cBZgdsSeivyOc51u5sIk92V2vEZvpXVtUMLXEeoNd-gkp94atXWxeKYO2DnG7bRenT190eb5sdnQaBPL1RpcVH1cqqFNxGywF0mOku7x5aWoqP4rvyNwzglBvUs4KcDPICaJ9Wk6M5tlD4EBfhM8ZcVv9ceDv0G225oKQBUzomxq36OawJg_82_IQzBZFsbBu8lTwyBakiNqn6SYdNeQQQR4ec3pF_qJZsYtGvZw7S0U-CK5UZeHy7cTncyiQ","p":"9aLEvvP7rH3CPr8u2K-KzIDn5BD8P62QbCAzlHvT0NEfF9mstcgscGp_EqUg44gj_lzKT0DXusCIS2HqChZ-9bFBbpI6W0p38qVnbFus3naPga5yX9kN0-ipaNMuHuJ-1bkHfXAY4MdkOdwicy2EOa3ES8b3YOCz8NsMHgpkDqs","q":"qCc-dTJDm8LCse9UzkAOXNAi8yBObNeh4C2Lk6OwOXcjA1uI5W5f5iTAOcxgAnYDgjJv8fYhbIEPtf2uknO_e0_kGiTiT8oHqV4fxy_rb50hO8DB8qplrVBEV1j4hzfynDqi6UysScRyRWi7a_XHUIrlLIEkL_LP0Hj-hgXZEKU","dp":"W2ZfkzYyFbMNzk9RXSukmAf3QXPYiNFKhhFNYBjbbj4CNdu3WkTL1GCsPAHZxRBpZEKevPLB0ynFDVe3wF0yjLWSRVSABmwlSdKmMznBj13KdFS3FlcrwAg40VqTNMbOrzQUR2aouys2bhktcHIlW1j_S7sTXab_DcZUMfFn3dU","dq":"g23pC4E2BtC7jIgcKPk4QKMOLinaIoiIJchzh_oxCzlrTHyHC4yxuBiRhpuPj1zecS0rAlv20_Asb3rQr_d4etF-4FBj8yldw6ul-vIheyO9jg6jiSBWSJisUflgh4_bOPE71E3xe9bn2gh6NW_tUa6-YYKu3itS8wcfKXH4r2E","qi":"rCDoXzNVxrzvy_0AEweW2oxLIDvoif0E9iB0ZXGFfwRvWmKNLVjR-lQmD6NvlO03DPbEbo2T9SCAluSV0SZphal57W7hHvrGzfIkehulwt1r7fUVwK4YX9cKGeiEvzHcpKfSslcamaHXA9JTNNkuvRsSoveLJkFrfTf_kA8AlS8"};
 const audience = tokenEndpoint;
 const privateKey = jwkToPem(privateKeyJWT, { private: true }); 
 /////////
@@ -57,8 +57,6 @@ const payload = {
     params.append('client_assertion_type', 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer');
     params.append('client_assertion', clientAssertion);
 
-    console.log('params.toString():', params.toString());
-
     const response = await fetch(tokenEndpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
@@ -87,16 +85,11 @@ app.get('/userinfo', async (req, res) => {
     });
 
     const text = await response.text(); 
-    console.log('userinfo response:', text);
     
    try {
     
-    //const data = JSON.parse(decodedPayload);
-    
     const decodedPayload = getUserInfoFromJwt(text);
     
-    console.log('decodedPayload:', decodedPayload);
-
     res.status(response.status).json(decodedPayload);
     } catch (err) {
         console.log('Error parsing JSON:', err);
@@ -111,7 +104,6 @@ app.get('/userinfo', async (req, res) => {
 
 function getUserInfoFromJwt(jwt) {
 
-    console.log('jwt:', jwt);
   const parts = jwt.split('.');
 
   if (parts.length !== 3) {
@@ -131,8 +123,8 @@ function getUserInfoFromJwt(jwt) {
   const userInfo = JSON.parse(decoded);
 
   return userInfo;
-}
 
+}
 
 const PORT = 4000;
 app.listen(PORT, () => {
