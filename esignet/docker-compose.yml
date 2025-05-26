@@ -43,7 +43,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/mosip_esignet?currentSchema=esignet
       - MOSIP_ESIGNET_MOCK_DOMAIN_URL=http://mock-identity-system:8082
       - MOSIP_ESIGNET_INTEGRATION_KEY_BINDER=MockKeyBindingWrapperService
-      - MOSIP_ESIGNET_DOMAIN_URL=http://localhost:8088
+      - MOSIP_ESIGNET_DOMAIN_URL=http://esignet:8088
       - SPRING_CACHE_TYPE=redis
       - SPRING_REDIS_HOST=redis-server
       - SPRING_REDIS_PASSWORD=
@@ -53,8 +53,8 @@ services:
       - CORS_ALLOWED_HEADERS=authorization,content-type      
       - CORS_ALLOW_CREDENTIALS=true
       - CORS_MAX_AGE=3600      
-    volumes:
-      - ./esignet-application.properties:/home/mosip/config/application-local.properties
+    # volumes:
+    #   - ./esignet-application.properties:/home/mosip/config/application-local.properties
     depends_on:
       - database
       - mock-identity-system
