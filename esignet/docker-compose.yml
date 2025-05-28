@@ -47,8 +47,8 @@ services:
       - SPRING_CACHE_TYPE=redis
       - SPRING_REDIS_HOST=redis-server
       - SPRING_REDIS_PASSWORD=
-      - CORS_ALLOWED_ORIGINS=http://localhost:3001
-      - SPRING_CORS_ALLOW_ORIGIN=http://localhost:3001
+      - CORS_ALLOWED_ORIGINS=http://146.190.122.50:3001
+      - SPRING_CORS_ALLOW_ORIGIN=http://146.190.122.50:3001
       - CORS_ALLOWED_METHODS=GET,POST,PUT,DELETE,OPTIONS
       - CORS_ALLOWED_HEADERS=authorization,content-type      
       - CORS_ALLOW_CREDENTIALS=true

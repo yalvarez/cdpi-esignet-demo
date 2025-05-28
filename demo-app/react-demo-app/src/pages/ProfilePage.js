@@ -27,7 +27,7 @@ export default function ProfilePage() {
     const fetchInfo = async () => {
       try {
 
-      const response = await fetch('http://localhost:4000/userinfo', {
+      const response = await fetch('http://146.190.122.50:4000/userinfo', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${accessToken}`,
