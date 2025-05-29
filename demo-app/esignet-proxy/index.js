@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const issuer = 'http://146.190.122.50:8088';
+const issuer = 'http://20.94.41.164:8088';
 const clientId = 'IIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoVh41';
 const tokenEndpoint = issuer + '/v1/esignet/oauth/v2/token';
 const userInfoEndpoint = issuer + '/v1/esignet/oidc/userinfo';
@@ -128,5 +128,5 @@ function getUserInfoFromJwt(jwt) {
 
 const PORT = 4000;
 app.listen(PORT, () => {
-  console.log(`Listening on  http://146.190.122.50:${PORT}`);
+  console.log(`Listening on  http://20.94.41.164:${PORT}`);
 });

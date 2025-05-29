@@ -6,7 +6,7 @@ const HomePage = () => {
   const nonce = `${Math.floor(Date.now() / 1000)}-${Math.random().toString(36).substring(2)}`;
 
   // const login = () => {
-  //   const authUrl = `http://146.190.122.50:3000/authorize?nonce=${nonce}&state=eree2311&client_id=${oidcSettings.client_id}&redirect_uri=${encodeURIComponent(oidcSettings.redirect_uri)}&scope=openid profile&response_type=code&acr_values=mosip:idp:acr:generated-code&claims=${encodeURIComponent('{"userinfo":{"given_name":{"essential":true},"phone_number":{"essential":false},"email":{"essential":true},"picture":{"essential":false},"gender":{"essential":false},"birthdate":{"essential":false},"address":{"essential":false}},"id_token":{}}')}&claims_locales=en&display=page&ui_locales=en-US`; 
+  //   const authUrl = `http://20.94.41.164:3000/authorize?nonce=${nonce}&state=eree2311&client_id=${oidcSettings.client_id}&redirect_uri=${encodeURIComponent(oidcSettings.redirect_uri)}&scope=openid profile&response_type=code&acr_values=mosip:idp:acr:generated-code&claims=${encodeURIComponent('{"userinfo":{"given_name":{"essential":true},"phone_number":{"essential":false},"email":{"essential":true},"picture":{"essential":false},"gender":{"essential":false},"birthdate":{"essential":false},"address":{"essential":false}},"id_token":{}}')}&claims_locales=en&display=page&ui_locales=en-US`; 
   //   window.location.href = authUrl;
   // };
 
@@ -24,7 +24,7 @@ const HomePage = () => {
           },
           oidcConfig: {
             acr_values: 'mosip:idp:acr:generated-code mosip:idp:acr:biometrics mosip:idp:acr:static-code',
-            authorizeUri: 'http://146.190.122.50:3000/authorize',
+            authorizeUri: 'http://20.94.41.164:3000/authorize',
             claims:{"userinfo":{"given_name":{"essential":true},"phone_number":{"essential":false},"email":{"essential":true},"picture":{"essential":false},"gender":{"essential":false},"birthdate":{"essential":false},"address":{"essential":false}},"id_token":{}},
             claims_locales: 'en',
             client_id: oidcSettings.client_id,
@@ -32,7 +32,7 @@ const HomePage = () => {
             max_age: 21,
             nonce: nonce,
             prompt: 'consent',
-            redirect_uri: 'http://146.190.122.50:3001/callback',
+            redirect_uri: 'http://20.94.41.164:3001/callback',
             scope: 'openid profile',
             state: 'eree2311',
             ui_locales: 'en'

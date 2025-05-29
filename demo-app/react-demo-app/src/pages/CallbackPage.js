@@ -19,7 +19,7 @@ const CallbackPage = () => {
     const fetchToken = async () => {
       try {
 
-        const response = await fetch('http://146.190.122.50:4000/token', {
+        const response = await fetch('http://20.94.41.164:4000/token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
