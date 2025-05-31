@@ -94,9 +94,10 @@ services:
     environment:
       DB_MYSQL_HOST: 'npm_db'
       DB_MYSQL_PORT: 3306
-      DB_MYSQL_USER: 'npm'
+      DB_MYSQL_USER: 'root'
       DB_MYSQL_PASSWORD: 'cdpi_npm_db_p@ss'
       DB_MYSQL_NAME: 'npm'
+      MYSQL_ROOT_PASSWORD: 'cdpi_npm_db_p@ss'
     volumes:
       - ./npm_data:/data
       - ./npm_letsencrypt:/etc/letsencrypt
