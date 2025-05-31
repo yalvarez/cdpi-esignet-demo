@@ -10,6 +10,8 @@
       volumes:
         - ./esignet-proxy:/app # Monta el código fuente para desarrollo (hot-reloading si tu app lo soporta)
         - /app/node_modules # Evita que los node_modules del host sobrescriban los del contenedor
+      networks:
+      - cdpi_demo_network # Asegúrate de que este servicio se una a la red
       restart: always
 
     # NUEVOS SERVICIOS: Tu aplicación React (frontend)
@@ -20,6 +22,13 @@
       container_name: react-demo-app
       ports:
         - "3001:80" # Mapea el puerto 80 del contenedor (Nginx) al puerto 3002 del host
+      networks:
+      - cdpi_demo_network # Asegúrate de que este servicio se una a la red
       depends_on:
         - node-proxy-app # Si tu React app depende de tu Node.js backend
       restart: always
+
+  # Define la red externa
+  networks:
+    cdpi_demo_network:
+      external: true

@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   database:
     image: 'postgres:bookworm'
@@ -8,6 +10,8 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks: # Agregamos la red para que pueda comunicarse si es necesario
+      - cdpi_demo_network
 
   redis:
     image: redis:6.0
@@ -15,12 +19,12 @@ services:
     ports:
       - "6379:6379"
     restart: always
+    networks: # Agregamos la red
+      - cdpi_demo_network
 
   mock-identity-system:
     image: 'mosipid/mock-identity-system:0.10.1'
     user: root
-    ports:
-      - 8082:8082
     environment:
       - container_user=mosip
       - active_profile_env=default,local
@@ -30,12 +34,12 @@ services:
       - MOSIP_MOCK_IDA_KYC_TRANSACTION_TIMEOUT_SECS=900
     depends_on:
       - database
+    networks: # Agregamos la red para que NPM pueda acceder
+      - cdpi_demo_network
 
   esignet:
     image: 'mosipid/esignet-with-plugins:1.5.1'
     user: root
-    ports: 
-      - 8088:8088
     environment:
       - container_user=mosip
       - active_profile_env=default,local
@@ -43,33 +47,79 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/mosip_esignet?currentSchema=esignet
       - MOSIP_ESIGNET_MOCK_DOMAIN_URL=http://mock-identity-system:8082
       - MOSIP_ESIGNET_INTEGRATION_KEY_BINDER=MockKeyBindingWrapperService
-      - MOSIP_ESIGNET_DOMAIN_URL=http://20.94.41.164:8088
+      # Tu dominio base para todos los servicios
+      - MOSIP_ESIGNET_DOMAIN_URL=https://cdpidemo.duckdns.org
       - SPRING_CACHE_TYPE=redis
       - SPRING_REDIS_HOST=redis-server
       - SPRING_REDIS_PASSWORD=
-      - CORS_ALLOWED_ORIGINS=http://20.94.41.164:3001
-      - SPRING_CORS_ALLOW_ORIGIN=http://20.94.41.164:3001
+      # CORS para tu dominio base
+      - CORS_ALLOWED_ORIGINS=https://cdpidemo.duckdns.org
+      - SPRING_CORS_ALLOW_ORIGIN=https://cdpidemo.duckdns.org
       - CORS_ALLOWED_METHODS=GET,POST,PUT,DELETE,OPTIONS
-      - CORS_ALLOWED_HEADERS=authorization,content-type      
+      - CORS_ALLOWED_HEADERS=authorization,content-type
       - CORS_ALLOW_CREDENTIALS=true
-      - CORS_MAX_AGE=3600      
-    # volumes:
-    #   - ./esignet-application.properties:/home/mosip/config/application-local.properties
+      - CORS_MAX_AGE=3600
     depends_on:
       - database
       - mock-identity-system
       - redis
+    networks: # Agregamos la red para que NPM pueda acceder
+      - cdpi_demo_network
 
   esignet-ui:
     image: 'mosipid/oidc-ui:1.5.1'
     user: root
-    ports:
-      - 3000:3000
     environment:
       - container_user=mosip
       - DEFAULT_WELLKNOWN=%5B%7B%22name%22%3A%22OpenID%20Configuration%22%2C%22value%22%3A%22%2F.well-known%2Fopenid-configuration%22%7D%2C%7B%22name%22%3A%22Jwks%20Json%22%2C%22value%22%3A%22%2F.well-known%2Fjwks.json%22%7D%2C%7B%22name%22%3A%22Authorization%20Server%22%2C%22value%22%3A%22%2F.well-known%2Foauth-authorization-server%22%7D%5D
       - SIGN_IN_WITH_ESIGNET_PLUGIN_URL=https://raw.githubusercontent.com/mosip/artifactory-ref-impl/master/artifacts/src/mosip-plugins/sign-in-with-esignet/sign-in-with-esignet.zip
+      # Considera si la UI necesita una variable de entorno para saber su base_path.
+      # Por ejemplo, si tuviera una variable como APP_BASE_PATH=/ui
+      # - APP_BASE_PATH=/ui
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - esignet
+    networks: # Agregamos la red para que NPM pueda acceder
+      - cdpi_demo_network
+
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+      - '81:81'
+    environment:
+      DB_MYSQL_HOST: 'npm_db'
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: 'npm'
+      DB_MYSQL_PASSWORD: 'your_npm_db_password' # ¡CAMBIA ESTA CONTRASEÑA!
+      DB_MYSQL_NAME: 'npm'
+    volumes:
+      - ./npm_data:/data
+      - ./npm_letsencrypt:/etc/letsencrypt
+    depends_on:
+      - npm_db
+    networks: # Nginx Proxy Manager necesita estar en esta red para ver a todos
+      - cdpi_demo_network
+
+  npm_db:
+    image: 'mariadb:10.6'
+    container_name: npm_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'your_npm_root_password' # ¡CAMBIA ESTA CONTRASEÑA!
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: 'your_npm_db_password' # ¡DEBE SER LA MISMA QUE ARRIBA!
+    volumes:
+      - ./npm_data/mysql:/var/lib/mysql
+    networks: # También la base de datos de NPM se une
+      - cdpi_demo_network
+
+# Definición de la red externa
+networks:
+  cdpi_demo_network:
+    external: true # Indica que esta red ya existe y Docker Compose no debe crearla
