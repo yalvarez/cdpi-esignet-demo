@@ -4,7 +4,7 @@ services:
     image: 'postgres:bookworm'
     ports:
       - 5455:5432 # Puerto expuesto en el host:puerto interno del contenedor
-    container_name: esignet_database # Nombre del contenedor para referencia
+    container_name: database # Nombre del contenedor para referencia
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -18,7 +18,7 @@ services:
   # Servidor Redis para los servicios Mosip
   redis:
     image: redis:6.0
-    container_name: redis-server # Nombre del contenedor para que otros servicios lo referencien
+    container_name: redis # Nombre del contenedor para que otros servicios lo referencien
     ports:
       - "6379:6379" # Puerto expuesto
     restart: always # Asegura que el contenedor se reinicie si falla
