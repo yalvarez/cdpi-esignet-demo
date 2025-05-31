@@ -24,7 +24,7 @@ const HomePage = () => {
           },
           oidcConfig: {
             acr_values: 'mosip:idp:acr:generated-code mosip:idp:acr:biometrics mosip:idp:acr:static-code',
-            authorizeUri: 'http://20.94.41.164:3000/authorize',
+            authorizeUri: 'https://cdpidemo.duckdns.org/esignet-ui/authorize',
             claims:{"userinfo":{"given_name":{"essential":true},"phone_number":{"essential":false},"email":{"essential":true},"picture":{"essential":false},"gender":{"essential":false},"birthdate":{"essential":false},"address":{"essential":false}},"id_token":{}},
             claims_locales: 'en',
             client_id: oidcSettings.client_id,
@@ -32,7 +32,7 @@ const HomePage = () => {
             max_age: 21,
             nonce: nonce,
             prompt: 'consent',
-            redirect_uri: 'http://20.94.41.164:3001/callback',
+            redirect_uri: 'https://cdpidemo.duckdns.org/callback',
             scope: 'openid profile',
             state: 'eree2311',
             ui_locales: 'en'
