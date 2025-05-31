@@ -127,13 +127,13 @@ services:
     container_name: npm_db
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: 'sqlP@SS123' # <--- ¡CAMBIA ESTA CONTRASEÑA!
-      MYSQL_DATABASE: 'npm' # La DB que NPM usará
-      MYSQL_USER: 'root' # No es estrictamente necesario aquí si usamos MYSQL_ROOT_PASSWORD y conectamos como root
-      MYSQL_PASSWORD: 'sqlP@SS123' # No es estrictamente necesario si el usuario es root
-      MYSQL_ROOT_HOST: '%' # <--- CRUCIAL: Permite que 'root' se conecte desde cualquier IP en la red Docker
+      MYSQL_ROOT_PASSWORD: 'sqlP@SS123'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'sqlP@SS123'
+      MYSQL_ROOT_HOST: '%'
     volumes:
-      - npm_db_data:/var/lib/mysql # Volumen persistente para los datos de MariaDB de NPM
+      - npm_db_data:/var/lib/mysql
     networks:
       - cdpi_demo_network
 
