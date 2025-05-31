@@ -1,30 +1,37 @@
 version: '3.8'
 
 services:
+  # Base de datos PostgreSQL para los servicios Mosip
   database:
     image: 'postgres:bookworm'
     ports:
-      - 5455:5432
+      - 5455:5432 # Puerto expuesto en el host:puerto interno del contenedor
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+      # Considera usar Docker secrets o variables de entorno para contraseñas en producción
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks: # Agregamos la red para que pueda comunicarse si es necesario
-      - cdpi_demo_network
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Script de inicialización de la DB
+      - pgdata:/var/lib/postgresql/data # Volumen persistente para los datos de PostgreSQL
+    networks:
+      - cdpi_demo_network # Red compartida para que todos los servicios se vean
 
+  # Servidor Redis para los servicios Mosip
   redis:
     image: redis:6.0
-    container_name: redis-server
+    container_name: redis-server # Nombre del contenedor para que otros servicios lo referencien
     ports:
-      - "6379:6379"
-    restart: always
-    networks: # Agregamos la red
+      - "6379:6379" # Puerto expuesto
+    restart: always # Asegura que el contenedor se reinicie si falla
+    volumes:
+      - redisdata:/data # Volumen persistente para los datos de Redis
+    networks:
       - cdpi_demo_network
 
+  # Servicio Mock Identity System de Mosip
   mock-identity-system:
     image: 'mosipid/mock-identity-system:0.10.1'
-    user: root
+    user: root # Ejecuta como root dentro del contenedor
     environment:
       - container_user=mosip
       - active_profile_env=default,local
@@ -33,10 +40,11 @@ services:
       - SPRING_DATASOURCE_PASSWORD=postgres
       - MOSIP_MOCK_IDA_KYC_TRANSACTION_TIMEOUT_SECS=900
     depends_on:
-      - database
-    networks: # Agregamos la red para que NPM pueda acceder
-      - cdpi_demo_network
+      - database # Asegura que la DB esté lista antes de iniciar
+    networks:
+      - cdpi_demo_network # Para que NPM pueda acceder a él internamente
 
+  # Servicio E-Signet de Mosip
   esignet:
     image: 'mosipid/esignet-with-plugins:1.5.1'
     user: root
@@ -45,15 +53,13 @@ services:
       - active_profile_env=default,local
       - plugin_name_env=esignet-mock-plugin.jar
       - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/mosip_esignet?currentSchema=esignet
-      - MOSIP_ESIGNET_MOCK_DOMAIN_URL=http://mock-identity-system:8082
+      - MOSIP_ESIGNET_MOCK_DOMAIN_URL=http://mock-identity-system:8082 # Comunicación interna con el servicio mock-identity-system
       - MOSIP_ESIGNET_INTEGRATION_KEY_BINDER=MockKeyBindingWrapperService
-      # Tu dominio base para todos los servicios
-      - MOSIP_ESIGNET_DOMAIN_URL=https://cdpidemo.duckdns.org
+      - MOSIP_ESIGNET_DOMAIN_URL=https://cdpidemo.duckdns.org # Tu dominio principal HTTPS
       - SPRING_CACHE_TYPE=redis
       - SPRING_REDIS_HOST=redis-server
       - SPRING_REDIS_PASSWORD=
-      # CORS para tu dominio base
-      - CORS_ALLOWED_ORIGINS=https://cdpidemo.duckdns.org
+      - CORS_ALLOWED_ORIGINS=https://cdpidemo.duckdns.org # Tu dominio principal para CORS
       - SPRING_CORS_ALLOW_ORIGIN=https://cdpidemo.duckdns.org
       - CORS_ALLOWED_METHODS=GET,POST,PUT,DELETE,OPTIONS
       - CORS_ALLOWED_HEADERS=authorization,content-type
@@ -63,9 +69,10 @@ services:
       - database
       - mock-identity-system
       - redis
-    networks: # Agregamos la red para que NPM pueda acceder
+    networks:
       - cdpi_demo_network
 
+  # Interfaz de usuario E-Signet de Mosip
   esignet-ui:
     image: 'mosipid/oidc-ui:1.5.1'
     user: root
@@ -73,55 +80,68 @@ services:
       - container_user=mosip
       - DEFAULT_WELLKNOWN=%5B%7B%22name%22%3A%22OpenID%20Configuration%22%2C%22value%22%3A%22%2F.well-known%2Fopenid-configuration%22%7D%2C%7B%22name%22%3A%22Jwks%20Json%22%2C%22value%22%3A%22%2F.well-known%2Fjwks.json%22%7D%2C%7B%22name%22%3A%22Authorization%20Server%22%2C%22value%22%3A%22%2F.well-known%2Foauth-authorization-server%22%7D%5D
       - SIGN_IN_WITH_ESIGNET_PLUGIN_URL=https://raw.githubusercontent.com/mosip/artifactory-ref-impl/master/artifacts/src/mosip-plugins/sign-in-with-esignet/sign-in-with-esignet.zip
-      # Considera si la UI necesita una variable de entorno para saber su base_path.
-      # Por ejemplo, si tuviera una variable como APP_BASE_PATH=/ui
-      # - APP_BASE_PATH=/ui
+      # NOTA: Si esta UI será accedida por una subruta (ej. /esignet-ui/),
+      # y tu cliente React es el dominio raíz, es posible que necesites
+      # configurar el 'base-path' o 'context-path' aquí si la aplicación lo soporta.
+      # Por ejemplo: - BASE_PATH=/esignet-ui
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf # Si este nginx.conf es para el Nginx interno de la UI, mantenlo
     depends_on:
       - esignet
-    networks: # Agregamos la red para que NPM pueda acceder
+    networks:
       - cdpi_demo_network
 
+  # Nginx Proxy Manager (manejará el SSL y el enrutamiento)
   nginx-proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: nginx-proxy-manager
     restart: unless-stopped
     ports:
-      - '80:80'
-      - '443:443'
-      - '81:81'
+      - '80:80'    # HTTP para Let's Encrypt y redirección a HTTPS
+      - '443:443'  # HTTPS para el tráfico seguro
+      - '81:81'    # Interfaz de administración de Nginx Proxy Manager
     environment:
-      DB_MYSQL_HOST: 'npm_db'
+      DB_MYSQL_HOST: 'npm_db' # Nombre del servicio de la DB de NPM
       DB_MYSQL_PORT: 3306
-      DB_MYSQL_USER: 'root'
-      DB_MYSQL_PASSWORD: 'cdpi_npm_db_p@ss'
-      DB_MYSQL_NAME: 'npm'
-      MYSQL_ROOT_PASSWORD: 'cdpi_npm_db_p@ss'
+      DB_MYSQL_USER: 'root' # <--- CAMBIO AQUÍ: Usando 'root' como usuario de DB
+      DB_MYSQL_PASSWORD: 'your_strong_npm_root_password' # <--- ¡CAMBIA ESTA CONTRASEÑA!
+      DB_MYSQL_NAME: 'npm' # Nombre de la base de datos de NPM
     volumes:
-      - ./npm_data:/data
-      - ./npm_letsencrypt:/etc/letsencrypt
+      - npm_data:/data # Volumen para la configuración de NPM y logs
+      - npm_letsencrypt:/etc/letsencrypt # Volumen para los certificados Let's Encrypt
     depends_on:
-      - npm_db
-    networks: # Nginx Proxy Manager necesita estar en esta red para ver a todos
-      - cdpi_demo_network
+      - npm_db # NPM depende de que su base de datos esté lista
+    networks:
+      - cdpi_demo_network # NPM debe estar en la misma red que los servicios a los que hace proxy
 
+  # Base de datos MariaDB para Nginx Proxy Manager
   npm_db:
     image: 'mariadb:10.6'
     container_name: npm_db
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: 'cdpi_npm_db_p@ss'
-      MYSQL_DATABASE: 'npm'
-      MYSQL_USER: 'root'
-      MYSQL_PASSWORD: 'cdpi_npm_db_p@ss'
-      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: 'your_strong_npm_root_password' # <--- ¡CAMBIA ESTA CONTRASEÑA!
+      MYSQL_DATABASE: 'npm' # La DB que NPM usará
+      MYSQL_USER: 'root' # No es estrictamente necesario aquí si usamos MYSQL_ROOT_PASSWORD y conectamos como root
+      MYSQL_PASSWORD: 'your_strong_npm_root_password' # No es estrictamente necesario si el usuario es root
+      MYSQL_ROOT_HOST: '%' # <--- CRUCIAL: Permite que 'root' se conecte desde cualquier IP en la red Docker
     volumes:
-      - ./npm_data/mysql:/var/lib/mysql
-    networks: # También la base de datos de NPM se une
+      - npm_db_data:/var/lib/mysql # Volumen persistente para los datos de MariaDB de NPM
+    networks:
       - cdpi_demo_network
 
-# Definición de la red externa
+# Definición de volúmenes persistentes
+volumes:
+  pgdata: # Para PostgreSQL
+  redisdata: # Para Redis
+  npm_data: # Para la configuración y logs de Nginx Proxy Manager
+  npm_db_data: # Para los datos de la base de datos de Nginx Proxy Manager
+  npm_letsencrypt: # Para los certificados de Nginx Proxy Manager
+
+# Definición de la red de Docker compartida
 networks:
   cdpi_demo_network:
-    external: true # Indica que esta red ya existe y Docker Compose no debe crearla
+    # Si esta red ya existe (la creaste con docker network create), descomenta la siguiente línea:
+    external: true
+    # Si quieres que Docker Compose la cree por ti (solo para este compose), deja 'external: false' o bórralo.
+    # Para tu caso con contenedores externos, 'external: true' es lo correcto después de crearla.
