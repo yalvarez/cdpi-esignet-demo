@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Base de datos PostgreSQL para los servicios Mosip
   database:
@@ -112,7 +110,7 @@ services:
       DB_MYSQL_HOST: 'npm_db' # Nombre del servicio de la DB de NPM
       DB_MYSQL_PORT: 3306
       DB_MYSQL_USER: 'root' # <--- CAMBIO AQUÍ: Usando 'root' como usuario de DB
-      DB_MYSQL_PASSWORD: 'your_strong_npm_root_password' # <--- ¡CAMBIA ESTA CONTRASEÑA!
+      DB_MYSQL_PASSWORD: 'sqlP@SS123' # <--- ¡CAMBIA ESTA CONTRASEÑA!
       DB_MYSQL_NAME: 'npm' # Nombre de la base de datos de NPM
     volumes:
       - npm_data:/data # Volumen para la configuración de NPM y logs
@@ -128,10 +126,10 @@ services:
     container_name: npm_db
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: 'your_strong_npm_root_password' # <--- ¡CAMBIA ESTA CONTRASEÑA!
+      MYSQL_ROOT_PASSWORD: 'sqlP@SS123' # <--- ¡CAMBIA ESTA CONTRASEÑA!
       MYSQL_DATABASE: 'npm' # La DB que NPM usará
       MYSQL_USER: 'root' # No es estrictamente necesario aquí si usamos MYSQL_ROOT_PASSWORD y conectamos como root
-      MYSQL_PASSWORD: 'your_strong_npm_root_password' # No es estrictamente necesario si el usuario es root
+      MYSQL_PASSWORD: 'sqlP@SS123' # No es estrictamente necesario si el usuario es root
       MYSQL_ROOT_HOST: '%' # <--- CRUCIAL: Permite que 'root' se conecte desde cualquier IP en la red Docker
     volumes:
       - npm_db_data:/var/lib/mysql # Volumen persistente para los datos de MariaDB de NPM
