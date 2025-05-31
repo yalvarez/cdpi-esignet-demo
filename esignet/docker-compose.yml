@@ -113,7 +113,7 @@ services:
       MYSQL_ROOT_PASSWORD: 'cdpi_npm_db_p@ss'
       MYSQL_DATABASE: 'npm'
       MYSQL_USER: 'npm'
-      MYSQL_PASSWORD: 'cdpi_npm_db_p@ss' 
+      MYSQL_PASSWORD: 'cdpi_npm_db_p@ss'
       MYSQL_ROOT_HOST: '%'
     volumes:
       - ./npm_data/mysql:/var/lib/mysql
