@@ -81,8 +81,8 @@ services:
     image: 'mosipid/oidc-ui:1.5.1'
     user: root
     container_name: esignet-ui
-    # ports:
-    #   - "3000:3000"
+    ports:
+       - "3000:3000"
     hostname: esignet-ui # Nombre de host para el contenedor
     environment:
       - container_user=mosip
