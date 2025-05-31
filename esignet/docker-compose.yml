@@ -4,6 +4,7 @@ services:
     image: 'postgres:bookworm'
     ports:
       - 5455:5432 # Puerto expuesto en el host:puerto interno del contenedor
+    container_name: esignet_database # Nombre del contenedor para referencia
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
