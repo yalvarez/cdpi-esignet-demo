@@ -95,7 +95,7 @@ services:
       DB_MYSQL_HOST: 'npm_db'
       DB_MYSQL_PORT: 3306
       DB_MYSQL_USER: 'npm'
-      DB_MYSQL_PASSWORD: 'your_npm_db_password' # ¡CAMBIA ESTA CONTRASEÑA!
+      DB_MYSQL_PASSWORD: 'cdpi_npm_db_p@ss'
       DB_MYSQL_NAME: 'npm'
     volumes:
       - ./npm_data:/data
@@ -110,10 +110,11 @@ services:
     container_name: npm_db
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: 'your_npm_root_password' # ¡CAMBIA ESTA CONTRASEÑA!
+      MYSQL_ROOT_PASSWORD: 'cdpi_npm_db_p@ss'
       MYSQL_DATABASE: 'npm'
       MYSQL_USER: 'npm'
-      MYSQL_PASSWORD: 'your_npm_db_password' # ¡DEBE SER LA MISMA QUE ARRIBA!
+      MYSQL_PASSWORD: 'cdpi_npm_db_p@ss' 
+      MYSQL_ROOT_HOST: '%'
     volumes:
       - ./npm_data/mysql:/var/lib/mysql
     networks: # También la base de datos de NPM se une
