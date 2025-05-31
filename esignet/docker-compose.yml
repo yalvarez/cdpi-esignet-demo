@@ -49,7 +49,7 @@ services:
     image: 'mosipid/esignet-with-plugins:1.5.1'
     user: root
     hostname: esignet # Nombre de host para el contenedor
-    container_name: name_esignet # Nombre del contenedor para referencia
+    container_name: esignet # Nombre del contenedor para referencia
     environment:
       - container_user=mosip
       - active_profile_env=default,local
@@ -57,7 +57,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/mosip_esignet?currentSchema=esignet
       - MOSIP_ESIGNET_MOCK_DOMAIN_URL=http://mock-identity-system:8082 # Comunicación interna con el servicio mock-identity-system
       - MOSIP_ESIGNET_INTEGRATION_KEY_BINDER=MockKeyBindingWrapperService
-      - MOSIP_ESIGNET_DOMAIN_URL=https://cdpidemo.duckdns.org/esignet # Tu dominio principal HTTPS
+      - MOSIP_ESIGNET_DOMAIN_URL=https://cdpidemo.duckdns.org # Tu dominio principal HTTPS
       - SPRING_CACHE_TYPE=redis
       - SPRING_REDIS_HOST=redis-server
       - SPRING_REDIS_PASSWORD=
