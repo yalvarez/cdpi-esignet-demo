@@ -33,6 +33,7 @@ services:
     image: 'mosipid/mock-identity-system:0.10.1'
     user: root # Ejecuta como root dentro del contenedor
     hostname: mock-identity-system # Nombre de host para el contenedor
+    container_name: mock-identity-system # Nombre del contenedor para referencia
     environment:
       - container_user=mosip
       - active_profile_env=default,local
@@ -50,6 +51,7 @@ services:
     image: 'mosipid/esignet-with-plugins:1.5.1'
     user: root
     hostname: esignet # Nombre de host para el contenedor
+    container_name: name_esignet # Nombre del contenedor para referencia
     environment:
       - container_user=mosip
       - active_profile_env=default,local
@@ -78,6 +80,7 @@ services:
   esignet-ui:
     image: 'mosipid/oidc-ui:1.5.1'
     user: root
+    container_name: esignet-ui
     # ports:
     #   - "3000:3000"
     hostname: esignet-ui # Nombre de host para el contenedor
