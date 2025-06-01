@@ -1,0 +1,46 @@
+services:
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - '80:80'    
+      - '443:443'  
+      - '81:81'
+    environment:
+      DB_MYSQL_HOST: 'npm_db'
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: 'root' 
+      DB_MYSQL_PASSWORD: 'sqlP@SS123'
+      DB_MYSQL_NAME: 'npm'
+    volumes:
+      - npm_data:/data
+      - npm_letsencrypt:/etc/letsencrypt
+    depends_on:
+      - npm_db
+    networks:
+      - cdpi_demo_network
+
+  npm_db:
+    image: 'mariadb:10.6'
+    container_name: npm_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'sqlP@SS123'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'sqlP@SS123'
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - npm_db_data:/var/lib/mysql
+    networks:
+      - cdpi_demo_network
+
+volumes:
+  npm_data:
+  npm_db_data:
+  npm_letsencrypt:
+
+networks:
+  cdpi_demo_network:
+    external: true
