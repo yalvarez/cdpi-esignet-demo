@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const issuer = 'https://cdpiesignet.duckdns.org';
+const issuer = 'http://esignet:8088';
 const clientId = 'IIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoVh41';
 const tokenEndpoint = issuer + '/v1/esignet/oauth/v2/token';
 const userInfoEndpoint = issuer + '/v1/esignet/oidc/userinfo';
