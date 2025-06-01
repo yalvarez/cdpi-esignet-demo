@@ -23,6 +23,11 @@ services:
       - redisdata:/data
     networks:
       - cdpi_demo_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
 
   mock-identity-system:
     image: 'mosipid/mock-identity-system:0.10.1'
