@@ -60,7 +60,7 @@ services:
       - MOSIP_ESIGNET_INTEGRATION_KEY_BINDER=MockKeyBindingWrapperService
       - MOSIP_ESIGNET_DOMAIN_URL=https://cdpiesignet.duckdns.org
       - SPRING_CACHE_TYPE=redis
-      - SPRING_REDIS_HOST=redi
+      - SPRING_REDIS_HOST=redis
       - SPRING_REDIS_PASSWORD=
       - CORS_ALLOWED_ORIGINS=https://cdpiapp.duckdns.org
       - SPRING_CORS_ALLOW_ORIGIN=https://cdpiapp.duckdns.org
