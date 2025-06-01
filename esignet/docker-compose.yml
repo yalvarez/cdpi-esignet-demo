@@ -53,12 +53,12 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/mosip_esignet?currentSchema=esignet
       - MOSIP_ESIGNET_MOCK_DOMAIN_URL=http://mock-identity-system:8082
       - MOSIP_ESIGNET_INTEGRATION_KEY_BINDER=MockKeyBindingWrapperService
-      - MOSIP_ESIGNET_DOMAIN_URL=https://cdpidemo.duckdns.org/esignet
+      - MOSIP_ESIGNET_DOMAIN_URL=https://esignetdemo.duckdns.org/esignet
       - SPRING_CACHE_TYPE=redis
       - SPRING_REDIS_HOST=redis-server
       - SPRING_REDIS_PASSWORD=
-      - CORS_ALLOWED_ORIGINS=https://cdpidemo.duckdns.org
-      - SPRING_CORS_ALLOW_ORIGIN=https://cdpidemo.duckdns.org
+      - CORS_ALLOWED_ORIGINS=https://esignetdemo.duckdns.org
+      - SPRING_CORS_ALLOW_ORIGIN=https://esignetdemo.duckdns.org
       - CORS_ALLOWED_METHODS=GET,POST,PUT,DELETE,OPTIONS
       - CORS_ALLOWED_HEADERS=authorization,content-type
       - CORS_ALLOW_CREDENTIALS=true

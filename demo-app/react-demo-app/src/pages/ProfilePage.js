@@ -27,7 +27,7 @@ export default function ProfilePage() {
     const fetchInfo = async () => {
       try {
 
-      const response = await fetch('https://cdpidemo.duckdns.org/proxyapp/userinfo', {
+      const response = await fetch('https://esignetdemo.duckdns.org/proxyapp/userinfo', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${accessToken}`,
