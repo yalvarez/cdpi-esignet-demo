@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const issuer = 'http://esignet:8088';
 const clientId = 'IIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoVh41';
-const tokenEndpoint = issuer + '/v1/esignet/oauth/v2/token';
+const tokenEndpoint = 'https://cdpiesignet.duckdns.org/v1/esignet/oauth/v2/token';
 const userInfoEndpoint = issuer + '/v1/esignet/oidc/userinfo';
 
 //this only for testing purposes
