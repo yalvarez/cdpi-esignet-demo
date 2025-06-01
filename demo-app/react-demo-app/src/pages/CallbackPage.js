@@ -19,7 +19,7 @@ const CallbackPage = () => {
     const fetchToken = async () => {
       try {
 
-        const response = await fetch('https://esignetdemo.duckdns.org/proxyapp/token', {
+        const response = await fetch('https://cdpiapp.duckdns.org/proxyapp/token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
