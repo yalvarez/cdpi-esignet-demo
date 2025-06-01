@@ -11,12 +11,12 @@ app.use(express.urlencoded({ extended: true }));
 
 const issuer = 'http://esignet:8088';
 const clientId = 'IIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoVh41';
-const tokenEndpoint = 'https://cdpiesignet.duckdns.org/v1/esignet/oauth/v2/token';
+const tokenEndpoint = issuer + '/v1/esignet/oauth/v2/token';
 const userInfoEndpoint = issuer + '/v1/esignet/oidc/userinfo';
 
 //this only for testing purposes
 const privateKeyJWT = {"kty":"RSA","n":"oVh41yh5KGF7V9zO5DyRWKhIU79GWpjWXUoNLNctoWrXa6rdXjyhZBpqBnD4oTY-SnUBZ4TovhHAgqV3HhQAcsglXKrtaa6M6H0wghsg6afkTkKYz3xGg10UVhsJNIJXCiDDSE0_BWuqJrrkEjJ8FYyyiPpgjNJYdCMj2E4i0yWd4Dww5Z8j6ml8QKOr6DN1OQbgV-VHsUlUgyf0rAb24-8yF4b4_QZx9PotF01UoX-38lE-4lWdMGz6ZktiEfvQFYds4qTQ_5k_RkMiU6xUaEbzQ_LbKE0VEzQyUiaksgGh6PIyt741HRXBHa3w_ohbh-XYm7UWVxFQsMqeuVskNw","e":"AQAB","d":"gL18ZonX6v2lkp0QxJMDks9sLs7Pz1hmq7d7vczQjx0WWMXUru4IBT0CXrNj4BbNK1IjVbt6jrbRei2XV3u0Q-Ip1cBZgdsSeivyOc51u5sIk92V2vEZvpXVtUMLXEeoNd-gkp94atXWxeKYO2DnG7bRenT190eb5sdnQaBPL1RpcVH1cqqFNxGywF0mOku7x5aWoqP4rvyNwzglBvUs4KcDPICaJ9Wk6M5tlD4EBfhM8ZcVv9ceDv0G225oKQBUzomxq36OawJg_82_IQzBZFsbBu8lTwyBakiNqn6SYdNeQQQR4ec3pF_qJZsYtGvZw7S0U-CK5UZeHy7cTncyiQ","p":"9aLEvvP7rH3CPr8u2K-KzIDn5BD8P62QbCAzlHvT0NEfF9mstcgscGp_EqUg44gj_lzKT0DXusCIS2HqChZ-9bFBbpI6W0p38qVnbFus3naPga5yX9kN0-ipaNMuHuJ-1bkHfXAY4MdkOdwicy2EOa3ES8b3YOCz8NsMHgpkDqs","q":"qCc-dTJDm8LCse9UzkAOXNAi8yBObNeh4C2Lk6OwOXcjA1uI5W5f5iTAOcxgAnYDgjJv8fYhbIEPtf2uknO_e0_kGiTiT8oHqV4fxy_rb50hO8DB8qplrVBEV1j4hzfynDqi6UysScRyRWi7a_XHUIrlLIEkL_LP0Hj-hgXZEKU","dp":"W2ZfkzYyFbMNzk9RXSukmAf3QXPYiNFKhhFNYBjbbj4CNdu3WkTL1GCsPAHZxRBpZEKevPLB0ynFDVe3wF0yjLWSRVSABmwlSdKmMznBj13KdFS3FlcrwAg40VqTNMbOrzQUR2aouys2bhktcHIlW1j_S7sTXab_DcZUMfFn3dU","dq":"g23pC4E2BtC7jIgcKPk4QKMOLinaIoiIJchzh_oxCzlrTHyHC4yxuBiRhpuPj1zecS0rAlv20_Asb3rQr_d4etF-4FBj8yldw6ul-vIheyO9jg6jiSBWSJisUflgh4_bOPE71E3xe9bn2gh6NW_tUa6-YYKu3itS8wcfKXH4r2E","qi":"rCDoXzNVxrzvy_0AEweW2oxLIDvoif0E9iB0ZXGFfwRvWmKNLVjR-lQmD6NvlO03DPbEbo2T9SCAluSV0SZphal57W7hHvrGzfIkehulwt1r7fUVwK4YX9cKGeiEvzHcpKfSslcamaHXA9JTNNkuvRsSoveLJkFrfTf_kA8AlS8"};
-const audience = tokenEndpoint;
+const audience = 'https://cdpiesignet.duckdns.org/v1/esignet/oauth/v2/token';
 const privateKey = jwkToPem(privateKeyJWT, { private: true }); 
 /////////
 
