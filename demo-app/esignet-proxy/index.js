@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const issuer = 'https://esignetdemo.duckdns.org/esignet';
+const issuer = 'https://cdpiapp.duckdns.org';
 const clientId = 'IIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoVh41';
 const tokenEndpoint = issuer + '/v1/esignet/oauth/v2/token';
 const userInfoEndpoint = issuer + '/v1/esignet/oidc/userinfo';
@@ -128,5 +128,5 @@ function getUserInfoFromJwt(jwt) {
 
 const PORT = 4000;
 app.listen(PORT, () => {
-  console.log(`Listening on  https://esignetdemo.duckdns.org:${PORT}`);
+  console.log(`Listening on  https://cdpiapp.duckdns.org:${PORT}`);
 });
