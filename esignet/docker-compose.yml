@@ -85,7 +85,8 @@ services:
       # y tu cliente React es el dominio raíz, es posible que necesites
       # configurar el 'base-path' o 'context-path' aquí si la aplicación lo soporta.
       # Por ejemplo: 
-      - BASE_PATH=/esignet-ui
+      - PUBLIC_URL=/esignet-ui/ # <--- ¡Asegúrate de que esta línea esté!
+
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf # Si este nginx.conf es para el Nginx interno de la UI, mantenlo
     depends_on:
