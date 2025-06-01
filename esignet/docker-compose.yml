@@ -57,16 +57,20 @@ services:
       - SPRING_CACHE_TYPE=redis
       - SPRING_REDIS_HOST=redis-server
       - SPRING_REDIS_PASSWORD=
-      - CORS_ALLOWED_ORIGINS=https://cdpiesignet.duckdns.org
-      - SPRING_CORS_ALLOW_ORIGIN=https://cdpiesignet.duckdns.org
+      - CORS_ALLOWED_ORIGINS=https://cdpiapp.duckdns.org
+      - SPRING_CORS_ALLOW_ORIGIN=https://cdpiapp.duckdns.org
       - CORS_ALLOWED_METHODS=GET,POST,PUT,DELETE,OPTIONS
       - CORS_ALLOWED_HEADERS=authorization,content-type
       - CORS_ALLOW_CREDENTIALS=true
       - CORS_MAX_AGE=3600
     depends_on:
-      - database
-      - mock-identity-system
-      - redis
+      database:
+        condition: service_started
+      mock-identity-system:
+        condition: service_started
+      redis: 
+        condition: service_healthy
+
     networks:
       - cdpi_demo_network
 
