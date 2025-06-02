@@ -169,7 +169,7 @@ INSERT INTO esignet.client_detail (
   'IIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoVh41',
   'https://cdpiapp.duckdns.org/logo.svg',
   '["https://cdpiapp.duckdns.org/callback"]',
-  '["name", "given_name", "family_name", "gender", "birthdate", "email", "phone_number", "address", "preferred_username", "profile", "picture"]',
+  '["name", "gender", "birthdate", "email", "phone_number", "address", "picture"]',
   '["mosip:idp:acr:generated-code"]',
   '{"kty":"RSA","n":"oVh41yh5KGF7V9zO5DyRWKhIU79GWpjWXUoNLNctoWrXa6rdXjyhZBpqBnD4oTY-SnUBZ4TovhHAgqV3HhQAcsglXKrtaa6M6H0wghsg6afkTkKYz3xGg10UVhsJNIJXCiDDSE0_BWuqJrrkEjJ8FYyyiPpgjNJYdCMj2E4i0yWd4Dww5Z8j6ml8QKOr6DN1OQbgV-VHsUlUgyf0rAb24-8yF4b4_QZx9PotF01UoX-38lE-4lWdMGz6ZktiEfvQFYds4qTQ_5k_RkMiU6xUaEbzQ_LbKE0VEzQyUiaksgGh6PIyt741HRXBHa3w_ohbh-XYm7UWVxFQsMqeuVskNw","e":"AQAB","kid":"mkUwNOHGq0RI_hB3x8VhoEChuUZQrxFINGzhfHYEmuY"}'::jsonb,
   '["authorization_code"]',
