@@ -25,7 +25,7 @@ const HomePage = () => {
           oidcConfig: {
             acr_values: 'mosip:idp:acr:generated-code mosip:idp:acr:biometrics mosip:idp:acr:static-code',
             authorizeUri: 'https://cdpiesignet.duckdns.org/authorize',
-            claims:{"userinfo":{"name":{"essential":true},"email":null,"phone_number":{"essential":false}},"id_token":{"auth_time":{"essential":true}}},
+            claims:{"userinfo":{"name":{"essential":true},"email":null,"phone_number":{"essential":true}},"id_token":{"auth_time":{"essential":true}}},
             claims_locales: 'en',
             client_id: oidcSettings.client_id,
             display: 'page',
