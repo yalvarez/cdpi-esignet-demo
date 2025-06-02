@@ -33,7 +33,7 @@ const HomePage = () => {
             nonce: nonce,
             prompt: 'consent',
             redirect_uri: 'https://cdpiapp.duckdns.org/callback',
-            scope: 'openid',
+            scope: 'openid profile',
             state: 'eree2311',
             ui_locales: 'en'
           }
@@ -49,7 +49,7 @@ const HomePage = () => {
       <div style={styles.contentWrapper}>
         <h1>Welcome to CDPI Demo</h1>
         <div id="sign-in-with-esignet-standard"></div> 
-           <button onClick={login}>Login with Esignet</button>
+           {/* <button onClick={login}>Login with Esignet</button> */}
       </div>
     </div>
   );
