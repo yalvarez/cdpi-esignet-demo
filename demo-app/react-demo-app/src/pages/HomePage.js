@@ -25,7 +25,7 @@ const HomePage = () => {
           oidcConfig: {
             acr_values: 'mosip:idp:acr:generated-code mosip:idp:acr:biometrics mosip:idp:acr:static-code',
             authorizeUri: 'https://cdpiesignet.duckdns.org/authorize',
-            claims:{"userinfo":{"given_name":{"essential":true},"phone":{"essential":true},"email":{"essential":true},"picture":{"essential":false},"gender":{"essential":false},"birthdate":{"essential":false},"address":{"essential":false}},"id_token":{}},
+            claims:{"userinfo":{"given_name":{"essential":true},"phone_number_verified":{"essential":true},"email":{"essential":true},"picture":{"essential":false},"gender":{"essential":false},"birthdate":{"essential":false},"address":{"essential":false}},"id_token":{}},
             claims_locales: 'en',
             client_id: oidcSettings.client_id,
             display: 'page',
@@ -33,7 +33,7 @@ const HomePage = () => {
             nonce: nonce,
             prompt: 'consent',
             redirect_uri: 'https://cdpiapp.duckdns.org/callback',
-            scope: 'openid email',
+            scope: 'openid profile',
             state: 'eree2311',
             ui_locales: 'en'
           }
