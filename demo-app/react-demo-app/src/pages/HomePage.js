@@ -33,7 +33,7 @@ const HomePage = () => {
             nonce: nonce,
             prompt: 'consent',
             redirect_uri: 'https://cdpiapp.duckdns.org/callback',
-            scope: 'openid profile',
+            scope: 'openid',
             state: 'eree2311',
             ui_locales: 'en'
           }
