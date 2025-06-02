@@ -5,10 +5,10 @@ const HomePage = () => {
 
   const nonce = `${Math.floor(Date.now() / 1000)}-${Math.random().toString(36).substring(2)}`;
 
-  // const login = () => {
-  //   const authUrl = `http://20.94.41.164:3000/authorize?nonce=${nonce}&state=eree2311&client_id=${oidcSettings.client_id}&redirect_uri=${encodeURIComponent(oidcSettings.redirect_uri)}&scope=openid profile&response_type=code&acr_values=mosip:idp:acr:generated-code&claims=${encodeURIComponent('{"userinfo":{"given_name":{"essential":true},"phone_number":{"essential":false},"email":{"essential":true},"picture":{"essential":false},"gender":{"essential":false},"birthdate":{"essential":false},"address":{"essential":false}},"id_token":{}}')}&claims_locales=en&display=page&ui_locales=en-US`; 
-  //   window.location.href = authUrl;
-  // };
+  const login = () => {
+    const authUrl = `https://cdpiesignet.duckdns.org/authorize?nonce=${nonce}&state=eree2311&client_id=${oidcSettings.client_id}&redirect_uri=${encodeURIComponent(oidcSettings.redirect_uri)}&scope=openid profile&response_type=code&acr_values=mosip:idp:acr:generated-code&claims=${encodeURIComponent('{"userinfo":{"given_name":{"essential":true},"phone_number":{"essential":false},"email":{"essential":true},"picture":{"essential":false},"gender":{"essential":false},"birthdate":{"essential":false},"address":{"essential":false}},"id_token":{}}')}&claims_locales=en&display=page&ui_locales=en-US`; 
+    window.location.href = authUrl;
+  };
 
   useEffect(() => {
 
@@ -24,7 +24,7 @@ const HomePage = () => {
           },
           oidcConfig: {
             acr_values: 'mosip:idp:acr:generated-code mosip:idp:acr:biometrics mosip:idp:acr:static-code',
-            authorizeUri: 'https://cdpiesignet.duckdns.org/authorize',
+            authorizeUri: '/authorize',
             claims:{"userinfo":{"given_name":{"essential":true},"phone_number":{"essential":true},"email":{"essential":true},"picture":{"essential":false},"gender":{"essential":false},"birthdate":{"essential":false},"address":{"essential":false}},"id_token":{}},
             claims_locales: 'en',
             client_id: oidcSettings.client_id,
@@ -49,6 +49,7 @@ const HomePage = () => {
       <div style={styles.contentWrapper}>
         <h1>Welcome to CDPI Demo</h1>
         <div id="sign-in-with-esignet-standard"></div> 
+           <button onClick={login}>Login with Esignet</button>
       </div>
     </div>
   );
