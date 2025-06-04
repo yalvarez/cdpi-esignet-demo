@@ -68,7 +68,7 @@ const payload = {
 
   } catch (error) {
     console.log('Error :', error);
-    res.status(500).json({ error: 'Error al solicitar el token' });
+    res.status(500).json({ error: 'Error getting token' });
   }
 });
 
@@ -108,19 +108,15 @@ function getUserInfoFromJwt(jwt) {
   const parts = jwt.split('.');
 
   if (parts.length !== 3) {
-    throw new Error('Token JWT inválido');
+    throw new Error('Invalid JWT Token');
   }
 
-  // Decodifica el payload (segunda parte)
   const payload = parts[1];
 
-  // Añade padding si falta (base64url → base64 estándar)
   const padded = payload.padEnd(payload.length + (4 - payload.length % 4) % 4, '=');
 
-  // Decodifica el base64 a string
   const decoded = Buffer.from(padded, 'base64').toString('utf8');
 
-  // Convierte el string en objeto JSON
   const userInfo = JSON.parse(decoded);
 
   return userInfo;

@@ -16,13 +16,18 @@ export default function ProfilePage() {
   const [userInfo, setUserInfo] = useState(null);
   const [error, setError] = useState(null);
 
+    const login = () => {
+      const authUrl = `https://cdpiesignet.duckdns.org/authorize?nonce=${nonce}&state=eree2311&client_id=${oidcSettings.client_id}&redirect_uri=${encodeURIComponent(oidcSettings.redirect_uri)}&scope=openid profile&response_type=code&acr_values=mosip:idp:acr:generated-code&claims=${encodeURIComponent('{"userinfo":{"given_name":{"essential":true},"phone_number":{"essential":false},"email":{"essential":true},"picture":{"essential":false},"gender":{"essential":false},"birthdate":{"essential":false},"address":{"essential":false}},"id_token":{}}')}&claims_locales=en&display=page&ui_locales=en-US`; 
+      window.location.href = authUrl;
+    };
+
   useEffect(() => {
     const accessToken = localStorage.getItem('access_token');
 
-    // if (!code) {
-    //   setStatus('No se encontró el código de autorización');
-    //   return;
-    // }
+    if (!accessToken) {
+      setStatus('No se encontró el código de autorización');
+      return;
+    }
 
     const fetchInfo = async () => {
       try {
@@ -45,7 +50,7 @@ export default function ProfilePage() {
         }
       } catch (err) {
         console.error(err);
-        setUserInfo('Error al intercambiar el código');
+        setUserInfo('Error getting user info');
       }
     };
 

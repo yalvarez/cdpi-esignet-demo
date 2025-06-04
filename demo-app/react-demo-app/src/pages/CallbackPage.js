@@ -4,7 +4,7 @@ import { oidcSettings } from '../oidc-config';
 
 const CallbackPage = () => {
   const navigate = useNavigate();
-  const [status, setStatus] = useState('Procesando autenticación...');
+  const [status, setStatus] = useState('Authenticating...');
 
   useEffect(() => {
 
@@ -12,7 +12,7 @@ const CallbackPage = () => {
     const code = urlParams.get('code');
 
     if (!code) {
-      setStatus('No se encontró el código de autorización');
+      setStatus('authorization_code not found in URL');
       return;
     }
 
@@ -33,7 +33,7 @@ const CallbackPage = () => {
         if (data.access_token) {
           localStorage.setItem('access_token', data.access_token);
           localStorage.setItem('id_token', data.id_token);
-          setStatus('Autenticado con éxito. Redirigiendo...');
+          setStatus('User Authenticated!!!!. Redirecting...');
           setTimeout(() => navigate('/profile'), 1000);
         } else {
           setStatus(data.error);
