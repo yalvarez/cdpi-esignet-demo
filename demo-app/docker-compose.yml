@@ -5,7 +5,7 @@
         dockerfile: Dockerfile
       container_name: node-proxy-app
       #ports:
-      #  - "4000:4000" # Mapea el puerto de tu app Node.js al host
+      #  - "4000:4000"
       volumes:
         - ./esignet-proxy:/app
         - /app/node_modules
@@ -13,21 +13,19 @@
       - cdpi_demo_network
       restart: always
 
-    # NUEVOS SERVICIOS: Tu aplicación React (frontend)
     react-app:
       build:
         context: ./react-demo-app
         dockerfile: Dockerfile
       container_name: react-demo-app
       #ports:
-      #  - "3001:80" # Mapea el puerto 80 del contenedor (Nginx) al puerto 3002 del host
+      #  - "3001:80"
       networks:
       - cdpi_demo_network
       depends_on:
         - node-proxy-app
       restart: always
 
-  # Define la red externa
   networks:
     cdpi_demo_network:
       external: true

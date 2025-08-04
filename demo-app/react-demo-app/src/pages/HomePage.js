@@ -23,7 +23,7 @@ const HomePage = () => {
             type: 'standard'
           },
           oidcConfig: {
-            acr_values: 'mosip:idp:acr:generated-code mosip:idp:acr:biometrics mosip:idp:acr:static-code',
+            acr_values: 'mosip:idp:acr:generated-code mosip:idp:acr:static-code',
             authorizeUri: 'https://cdpiesignet.duckdns.org/authorize',
             claims:{"userinfo":{"name":{"essential":true},"phone_number":{"essential":false},"email":{"essential":true},"picture":{"essential":false},"gender":{"essential":false},"birthdate":{"essential":false},"address":{"essential":false}},"id_token":{}},
             claims_locales: 'en',
